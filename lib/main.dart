@@ -4,6 +4,7 @@ import 'package:instragram/responsive/mobilescreenLayout.dart';
 import 'package:instragram/responsive/responsive_layout_screen.dart';
 import 'package:instragram/responsive/webscreenLayout.dart';
 import 'package:instragram/screen/login.dart';
+import 'package:instragram/screen/sign_upscreen.dart';
 import 'package:instragram/utils/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: mobileBackgroundColor
       ),
       // home: const ResponsiveLayout(mobilescreenLayout:MobileScrennLayout(), webscreenLayout:WebScrennLayout() ,),
-    home:const LoginPage()
+    home:const SignPage()
     );
   }
 }
