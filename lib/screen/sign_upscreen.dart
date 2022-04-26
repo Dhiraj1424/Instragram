@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instragram/services/auth_method.dart';
 import 'package:instragram/utils/colors.dart';
 
 import '../widgets/text_field_input.dart';
@@ -29,29 +30,30 @@ class _SignPageState extends State<SignPage> {
                 child: Container(),
                 flex: 2,
               ),
-             
               SvgPicture.asset(
                 'assets/ic_instagram.svg',
                 color: primaryColor,
                 height: 64,
               ),
-               Stack(
-                 children: [
-                   const  CircleAvatar(
-                     radius: 64,
-                     backgroundImage: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNys7iFvBBxifr5E1pgSgnlKxZ8G9HO-47sSR1oW57o1QAXA3YuXsmpVq1WZk9-HkoZls&usqp=CAU',),
-                   ),
-               
-                   Positioned(
-                     right: 10,
-                     bottom: 4,
-                     child: IconButton(icon: Icon(Icons.add_a_photo),
-                     onPressed: (){},
-                     ),
-                   )
-                 ],
-               ),
-                 const SizedBox(
+              Stack(
+                children: [
+                  const CircleAvatar(
+                    radius: 64,
+                    backgroundImage: NetworkImage(
+                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNys7iFvBBxifr5E1pgSgnlKxZ8G9HO-47sSR1oW57o1QAXA3YuXsmpVq1WZk9-HkoZls&usqp=CAU',
+                    ),
+                  ),
+                  Positioned(
+                    right: 10,
+                    bottom: 4,
+                    child: IconButton(
+                      icon: Icon(Icons.add_a_photo),
+                      onPressed: () {},
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(
                 height: 20,
               ),
               TextInputField(
@@ -88,11 +90,22 @@ class _SignPageState extends State<SignPage> {
                 height: 20,
               ),
               InkWell(
+                 onTap:()
+                      async {
+                      String res=await AuthMethod().signupUser(
+                          usernsame: _usernameController.text,
+                          email: _emailController.text,
+                          bio: _bioController.text,
+                          password: _passwordController.text);
+                          print(res);
+                    },
+              
                 child: Container(
+              
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   height: 40,
                   width: double.infinity,
-                  child: const Text('login'),
+                  child: const Text('Sign up'),
                   alignment: Alignment.center,
                   decoration: const ShapeDecoration(
                       color: Colors.blue,
@@ -120,10 +133,10 @@ class _SignPageState extends State<SignPage> {
                     onTap: (){},
                     child: Container(
                       child: const Text(
-                        'Sign up?',
+                        'Loginin?',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      padding:const  EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                     ),
                   ),
                 ],
