@@ -21,11 +21,14 @@ required String email,required String bio,required String password,
       // register a user
      UserCredential crd =await _auth.createUserWithEmailAndPassword(email: email, password: password);
       // add user to database
-      // _firestore.collection('user').add({
+      // _firestore.collection('users').add({
       //   'username':usernsame,
       //   'email':email,
       //   'bio':bio,
       //   'password':password,
+      //   'uid':crd.user!.uid,
+      //   'followers':[],
+      //   'following':[]
       //   'file':file,
         // or this method also work
         await _firestore.collection('users').doc(crd.user!.uid).set({

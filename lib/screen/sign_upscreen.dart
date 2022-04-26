@@ -1,7 +1,12 @@
+import 'dart:typed_data';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instragram/services/auth_method.dart';
 import 'package:instragram/utils/colors.dart';
+import 'package:instragram/utils/pickimage_utils.dart';
 
 import '../widgets/text_field_input.dart';
 
@@ -17,6 +22,17 @@ class _SignPageState extends State<SignPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
+  Uint8List? _image;
+
+
+selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    // set state because we need to display the image we selected on the circle avatar
+    setState(() {
+      _image = im;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,18 +53,24 @@ class _SignPageState extends State<SignPage> {
               ),
               Stack(
                 children: [
-                  const CircleAvatar(
-                    radius: 64,
-                    backgroundImage: NetworkImage(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNys7iFvBBxifr5E1pgSgnlKxZ8G9HO-47sSR1oW57o1QAXA3YuXsmpVq1WZk9-HkoZls&usqp=CAU',
-                    ),
-                  ),
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 64,
+                          backgroundImage: MemoryImage(_image!),
+                          backgroundColor: Colors.red,
+                        )
+                      : const CircleAvatar(
+                          radius: 64,
+                          backgroundImage: NetworkImage(
+                              'https://i.stack.imgur.com/l60Hf.png'),
+                          backgroundColor: Colors.red,
+                        ),
                   Positioned(
                     right: 10,
                     bottom: 4,
                     child: IconButton(
                       icon: Icon(Icons.add_a_photo),
-                      onPressed: () {},
+                      onPressed: selectImage,
                     ),
                   )
                 ],
